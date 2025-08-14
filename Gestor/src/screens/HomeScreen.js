@@ -9,54 +9,61 @@ import{
     SafeAreaView
 } from 'react-native';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     //useState hook para gestionar el estado del email y la contraseña
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     //Función que se ejecuta al presionar al botón de "Entrar"
-    const handLogin = () => {
+    const handleLogin = () => {
         //Verificamos que los campos no estén vacios
     }
 
     //Función botón "Registrate"
     const handRegistar = () => {
-        
+        navigation.navigate('Registro')
     }
 
     //Diseño de la aplicacion
     return (
-        <SafeAreaView style={style.safeArea}>
-            <View style= {style.container}/>
-            <Text style= {style.title}>Iniciar Sesion</Text>
-            <TextInput
-                style={style.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-            />
-            <TextInput
-                style={style.input}
-                placeholder="Contraseña"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <view style={style.buttonContainer}>
-                <Button
-                    title="Iniciar sesion"
-                    onPress={handLogin}
+        <SafeAreaView style={styles.safeArea}>
+            <View style= {styles.container}>
+                <Text style= {styles.title}>Iniciar Sesion</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                 />
-            </view>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Contraseña"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="Iniciar sesion"
+                        onPress={handleLogin}
+                    />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button 
+                        title="Registrar"
+                        onPress={handRegistar}
+                    />
+                </View>
+            </View>
         </SafeAreaView>
     );
 
 
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     safeArea:{
         flex:1,
         backgroundColor:'#f5f5f5'
@@ -90,6 +97,6 @@ const style = StyleSheet.create({
         borderRadius: 25,
         overflow: 'hidden',
     }
-})
+});
 
 export default LoginScreen;
