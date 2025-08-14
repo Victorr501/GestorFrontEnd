@@ -2,7 +2,7 @@ import {UserData} from '../types/User';
 
 //URL base de tu API
 //Si se modifica solo tengo que cambiarla
-const API_BASE_URL = 'https:// /api/v1';
+const API_BASE_URL = 'https://192.168.0.17:8000/api/v1';
 
 
 /**
@@ -11,7 +11,7 @@ const API_BASE_URL = 'https:// /api/v1';
  * @param {object} userData - El objeto con los datos del usuario
  * @returns {Promise<object>} - Una promesa que resuleve con los datos del usuario si el registro es existoso
  */
-export const register = async(userData) =>{
+export const registrar = async(userData) =>{
     try {
         const response = await fetch('${API_BASE_URL}/users/', {
             method: 'POST',
