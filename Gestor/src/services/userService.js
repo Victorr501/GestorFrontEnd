@@ -2,7 +2,7 @@ import {UserData} from '../types/User';
 
 //URL base de tu API
 //Si se modifica solo tengo que cambiarla
-const API_BASE_URL = 'https://192.168.0.17:8000/api/v1';
+const API_BASE_URL = 'https://127.0.2.2:8000/api/v1';
 
 
 /**
@@ -21,7 +21,7 @@ export const registrar = async(userData) =>{
             body: JSON.stringify(userData),
         });
 
-        //VErficamos si la respuesta es exitosa
+        //Verficamos si la respuesta es exitosa
         if(!response.ok){
             const erroData = await response.json();
             throw new Error(erroData.datail || 'Error en el registro');
