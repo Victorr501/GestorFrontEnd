@@ -10,8 +10,10 @@ import {
 } 
 from 'react-native';
 
+
 //Importar el servicio que maneja la lógica de la API
 import {registrar} from '../services/userService';
+import {validateEmail} from '../utils/ValidadEmail';
 
 
 const RegistroScreen = ({navigation}) => {
@@ -24,15 +26,7 @@ const RegistroScreen = ({navigation}) => {
     //Esta variale activa el boton
     const [isLoading, setIsLoading] = useState(false);
 
-    /**
-     * Funcion para validar el formato de un correo electronico.
-     * @param {string} email - El correo electrónico a validar
-     * @returns {boolean} - True si el correo es valido, false si no lo es
-     */
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    } 
+    const [fallo, setFallo] = useState('');
 
     //Función para cancelar
     const handleCacelar = () => {
@@ -43,22 +37,22 @@ const RegistroScreen = ({navigation}) => {
     const handleRegistrar = async () => {
         //Verificar todos los parametros
         if (!name || !email  || !password){
-            Alert.alert('Error', 'Por favor, rellena todos los campos para continuar');
+            setFallo('Completa los campos');
             return;
         }
         //Verificar longitud de contraseña
         if (password.length <= 5){
-            Alert.alert('Error', 'La contraseña es muy corta');
+            setFallo('La contraseña es demasiado corta');
             return;
         }
         //Verificar la contraseña sea igual
         if (password !== confirmPassword){
-            Alert.alert('Error', 'Las contraseñas no coenciden');
+            setFallo('Las contraseñas no son iguales');
             return;
         }
         //Verificar el correo
         if(!validateEmail(email)){
-            Alert.alert('Error', 'El may esta mal escrito');
+            setFallo('Escribe un correo valido');
             return;
         }
 
@@ -73,12 +67,13 @@ const RegistroScreen = ({navigation}) => {
             const result = await registrar(userData);
 
             //Si el registro es existo, mostraremos un mensaje de existo
-            Alert.alert('!Exito', 'Usuario registrado ${result.email}');
-            console.log('Registro exitoso:', result);
+            setFallo('Registro completo')
+
 
             //Abrir el home de la aplicacion
             navigation.navigate('Home');
         } catch (error){
+            console.log(error.messege);
             Alert.alert('Error', error.messege || 'Ocurrio un eror inesperado');
         } finally {
             setIsLoading(false);
@@ -119,6 +114,7 @@ const RegistroScreen = ({navigation}) => {
                     onChangeText={setConfirmPassword}
                     secureTextEntry
                 />
+                {fallo ? <Text style={styles.setFallo}>{fallo}</Text> : null}
                 <View style={styles.buttonContainer}>
                     <Button
                         title={isLoading ? 'Cargando...' : 'Registrarse'}
@@ -172,7 +168,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderRadius: 25,
         overflow: 'hidden',
-    }
+    },
+    errorText: {
+    color: 'red',
+    marginBottom: 10,
+    textAlign: 'center'
+    },
 })
 
 

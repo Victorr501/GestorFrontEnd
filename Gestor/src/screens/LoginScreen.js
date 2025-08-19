@@ -8,15 +8,47 @@ import{
     StyleSheet,
     SafeAreaView
 } from 'react-native';
+import {validateEmail} from '../utils/ValidadEmail';
+import { login } from "../services/userService";
 
 const LoginScreen = ({navigation}) => {
     //useState hook para gestionar el estado del email y la contraseña
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     //Función que se ejecuta al presionar al botón de "Entrar"
-    const handleLogin = () => {
-        //Verificamos que los campos no estén vacios
+    const handleLogin = async () => {
+        //Limpiamos algun error anterior
+        setError('');
+
+        //Verificamos que los campos no estan vacios
+        if(!email || !password){
+            setError('Por favor, rellena los campos');
+            return;
+        }
+
+        //Verificamos que el correo no esta vacio
+        if(!validateEmail(email)){
+            setError('Por favor, introduzca un correo electrónico válido');
+            return;
+        }
+
+        try{
+            //Creamos la constante
+            const userData = {email, password};
+
+            //Llamamos al servicio
+            const result =  await login(userData);
+
+            //Indicar que el inicio de sesion esta completo
+            setError('Inicio de sesion completa');
+
+            navigation.navigate('Home');
+        } catch (errorCatch){
+            console.log(errorCatch.messege);
+            Alert.alert('Error', errorCatch.messege);
+        }
     }
 
     //Función botón "Registrate"
@@ -44,6 +76,7 @@ const LoginScreen = ({navigation}) => {
                     onChangeText={setPassword}
                     secureTextEntry
                 />
+                {error ? <Text style={styles.errorText}>{error}</Text> : null}
                 <View style={styles.buttonContainer}>
                     <Button
                         title="Iniciar sesion"
@@ -96,7 +129,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderRadius: 25,
         overflow: 'hidden',
-    }
+    },
+    errorText: {
+    color: 'red',
+    marginBottom: 10,
+    textAlign: 'center'
+    },
 });
 
 export default LoginScreen;
