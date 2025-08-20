@@ -46,8 +46,8 @@ const LoginScreen = ({navigation}) => {
 
             navigation.navigate('Home');
         } catch (errorCatch){
-            console.log(errorCatch.messege);
-            Alert.alert('Error', errorCatch.messege);
+            console.log(errorCatch.message);
+            Alert.alert('Error', errorCatch.message);
         }
     }
 
