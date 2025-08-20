@@ -13,7 +13,7 @@ from 'react-native';
 
 //Importar el servicio que maneja la lógica de la API
 import {registrar} from '../services/userService';
-import {validateEmail} from '../utils/ValidadEmail';
+import {validateEmail} from '../utils/ValidarEmail';
 
 
 const RegistroScreen = ({navigation}) => {
@@ -57,13 +57,15 @@ const RegistroScreen = ({navigation}) => {
         }
 
         //Registrar el usuario en la base datos
-        setIsLoading(true);
+        //setIsLoading(true);
         
         try{
             //Creamos el objeto userData 
             const userData = {name, email, password};
             
+            
             //Llamamos a la funcion del servicio y esperamos su respuesta
+ 
             const result = await registrar(userData);
 
             //Si el registro es existo, mostraremos un mensaje de existo
@@ -73,8 +75,8 @@ const RegistroScreen = ({navigation}) => {
             //Abrir el home de la aplicacion
             navigation.navigate('Home');
         } catch (error){
-            console.log(error.messege);
-            Alert.alert('Error', error.messege || 'Ocurrio un eror inesperado');
+            console.log(error.message);
+            Alert.alert('Error', error.message || 'Ocurrio un eror inesperado');
         } finally {
             setIsLoading(false);
         }
@@ -114,10 +116,10 @@ const RegistroScreen = ({navigation}) => {
                     onChangeText={setConfirmPassword}
                     secureTextEntry
                 />
-                {fallo ? <Text style={styles.setFallo}>{fallo}</Text> : null}
+                {fallo ? <Text style={styles.errorText}>{fallo}</Text> : null}
                 <View style={styles.buttonContainer}>
                     <Button
-                        title={isLoading ? 'Cargando...' : 'Registrarse'}
+                        title={isLoading ? "Cargando..." : "Registrarse"}
                         disabled={isLoading}
                         onPress={handleRegistrar}
                     />

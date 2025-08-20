@@ -8,7 +8,7 @@ import{
     StyleSheet,
     SafeAreaView
 } from 'react-native';
-import {validateEmail} from '../utils/ValidadEmail';
+import {validateEmail} from '../utils/ValidarEmail';
 import { login } from "../services/userService";
 
 const LoginScreen = ({navigation}) => {

@@ -15,6 +15,7 @@ export const registrar = async(userData) =>{
     const url = `${API_BASE_URL}/users/`;
     console.log("Intentando conectar a la URL:", url);    
     try {
+        
         const response = await fetch(url, {
             method: 'POST',
             headers:{
@@ -22,6 +23,8 @@ export const registrar = async(userData) =>{
             },
             body: JSON.stringify(userData),
         });
+        
+    
 
         //Verficamos si la respuesta es exitosa
         if(!response.ok){
@@ -62,7 +65,7 @@ export const login = async(userData) => {
         //Verificamos si la respuesta es correcta
         if (!response.ok){
             const erroData = await response.json();
-            throw new Error(erroData ||'Error de credenciales');
+            throw new Error(erroData.detail ||'Error de credenciales');
         }
 
         const result = await response.json();
