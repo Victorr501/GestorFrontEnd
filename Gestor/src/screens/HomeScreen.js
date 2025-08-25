@@ -12,11 +12,70 @@ import{
 } from 'react-native';
 
 
+//Simulacion de vantanas del proyecto
+const PrimeraScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 1</Text>
+const SegundaScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 2</Text>
+const TerceraScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 3</Text>
+const CuertaScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 4</Text>
+const HomeScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de Inicio</Text>
+
+//Componente que es la barra de navegación inferior
+const BottomTabBar = ({onTabPress}) => {
+    const [activeTab, setActiveTab] = useState('plus');
+
+    const handlePress = (tabName) => {
+        setActiveTab(tabName);
+        onTabPress(tabName); //La funcion es la del padre
+    };
+
+    return (
+        <View style={styles.tabBarContainer}>
+            <TouchableOpacity
+                style={[styles.tabButton, activeTab === 'home' && styles.tabButtonActive]}
+                onPress={() => handlePress("1")}
+            >
+                <Text style={styles.tabIcon}>🏠</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+            style={[styles.tabButton, activeTab === 'search' && styles.tabButtonActive]}
+            onPress={() => handlePress('2')}
+            >
+                <Text style={styles.tabIcon}>🔍</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                style={styles.centerTabButton}
+                onPress={() => handlePress('home')}
+            >
+                <Text style={styles.centerTabIcon}>➕</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                style={[styles.tabButton, activeTab === 'notifications' && styles.tabButtonActive]}
+                onPress={() => handlePress('3')}
+            >
+                <Text style={styles.tabIcon}>🔔</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                style={[styles.tabButton, activeTab === 'profile' && styles.tabButtonActive]}
+                onPress={() => handlePress('4')}
+            >
+                <Text style={styles.tabIcon}>👤</Text>
+            </TouchableOpacity>
+        </View>
+    )
+}
+
 const HomeScreen = ({navigation}) => {
 
     //Estado para almacenar el nombre del usuario
     const [userName, setUserName] = useState('Usuario');
     const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+    //Estado de la ventana para ver caul es
+    const [activeScreen, setActiveScreen] = useState('home');
 
     //Esto se ejecutara cuando el componente se monte.
     //Para cargar el usuario
@@ -38,60 +97,26 @@ const HomeScreen = ({navigation}) => {
     //Funcio para manejar el boton del perfil
     const handlePerfil = () => {
         setIsMenuVisible(false); //Oculta el menú
-        
+
     }
 
-    //Componente que es la barra de navegación inferior
-    const BottomTabBar = () => {
-        const [activeTab, setActiveTab] = useState('plus');
-
-        const handlePress = (tabName) => {
-            setActiveTab(tabName);
-
-            //Esto es para gestionar y verificar que funcionan las cosas
-            Alert.alert('Navegación', 'Presionaste el botón: ' + tabName);
-        };
-
-        return (
-            <View style={styles.tabBarContainer}>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'home' && styles.tabButtonActive]}
-                    onPress={() => handlePress("home")}
-                >
-                    <Text style={styles.tabIcon}>🏠</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                style={[styles.tabButton, activeTab === 'search' && styles.tabButtonActive]}
-                onPress={() => handlePress('search')}
-                >
-                    <Text style={styles.tabIcon}>🔍</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                    style={styles.centerTabButton}
-                    onPress={() => handlePress('plus')}
-                >
-                    <Text style={styles.centerTabIcon}>➕</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                    style={[styles.tabButton, activeTab === 'notifications' && styles.tabButtonActive]}
-                    onPress={() => handlePress('notifications')}
-                >
-                    <Text style={styles.tabIcon}>🔔</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                    style={[styles.tabButton, activeTab === 'profile' && styles.tabButtonActive]}
-                    onPress={() => handlePress('profile')}
-                >
-                    <Text style={styles.tabIcon}>👤</Text>
-                </TouchableOpacity>
-            </View>
-        )
+    //Metodo para renderizar el contenido
+    const renderScreenContent = () => {
+        switch(activeScreen) {
+            case 'home':
+                return <HomeScreenContent/>
+            case '1':
+                return <PrimeraScreenContent/>
+            case '2':
+                return <SegundaScreenContent/>
+            case '3':
+                return <TerceraScreenContent/>
+            case '4':
+                return <CuertaScreenContent/>
+            default:
+                return <HomeScreenContent/>
+        }
     }
-
 
     //Este as la pantalla principal
     return(
@@ -108,7 +133,7 @@ const HomeScreen = ({navigation}) => {
             {isMenuVisible &&(
                 <View style={styles.menuContainer}>
                     <TouchableOpacity style={styles.menuItem} onPress={handlePerfil}>
-                        <Text style={styles.menuItemText}>perfil</Text>
+                        <Text style={styles.menuItemText}>Perfil</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
                         <Text style={styles.menuItemText}>Cerrar sesion</Text>
@@ -116,17 +141,20 @@ const HomeScreen = ({navigation}) => {
                 </View>
             )}
 
-
             {/* Contendio principal */}
             <View style={styles.contentContainer}>
-                <Text>Contenido principal</Text>
+                {/* 
+                    Aqui es donde se ejecutara el metodo renderScreenConteniner
+                */}
+                {renderScreenContent()}
             </View>
             
             {/* 
                 Asi es como se inserta los objetos 
                 Este es la barra de opciones
+                OnTabPress es un metodo que se ejecuta cada vez que damos aun boton
             */}
-            <BottomTabBar/>
+            <BottomTabBar onTabPress={setActiveScreen}/>
         </SafeAreaView>
     );
 };
