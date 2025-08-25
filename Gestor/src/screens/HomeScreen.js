@@ -7,7 +7,8 @@ import{
     Alert,
     StyleSheet,
     SafeAreaView,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform
 } from 'react-native';
 
 
@@ -40,6 +41,60 @@ const HomeScreen = ({navigation}) => {
 
     }
 
+    //Componente que es la barra de navegación inferior
+    const BottomTabBar = () => {
+        const [activeTab, setActiveTab] = useState('plus');
+
+        const handlePress = (tabName) => {
+            setActiveTab(tabName);
+
+            //Esto es para gestionar y verificar que funcionan las cosas
+            Alert.alert('Navegación', 'Presionaste el botón: ' + tabName);
+        };
+
+        return (
+            <View style={styles.tabBarContainer}>
+                <TouchableOpacity
+                    style={[styles.tabButton, activeTab === 'home' && styles.tabButtonActive]}
+                    onPress={() => handlePress("home")}
+                >
+                    <Text style={styles.tabIcon}>🏠</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                style={[styles.tabButton, activeTab === 'search' && styles.tabButtonActive]}
+                onPress={() => handlePress('search')}
+                >
+                    <Text style={styles.tabIcon}>🔍</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                    style={styles.centerTabButton}
+                    onPress={() => handlePress('plus')}
+                >
+                    <Text style={styles.centerTabIcon}>➕</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                    style={[styles.tabButton, activeTab === 'notifications' && styles.tabButtonActive]}
+                    onPress={() => handlePress('notifications')}
+                >
+                    <Text style={styles.tabIcon}>🔔</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                    style={[styles.tabButton, activeTab === 'profile' && styles.tabButtonActive]}
+                    onPress={() => handlePress('profile')}
+                >
+                    <Text style={styles.tabIcon}>👤</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
+
+    //Este as la pantalla principal
+
     return(
         <SafeAreaView style={styles.safeArea}>
             {/* Encabezado */}
@@ -68,6 +123,11 @@ const HomeScreen = ({navigation}) => {
                 <Text>Contenido principal</Text>
             </View>
             
+            {/* 
+                Asi es como se inserta los objetos 
+                Este es la barra de opciones
+            */}
+            <BottomTabBar/>
         </SafeAreaView>
     );
 };
@@ -95,7 +155,9 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     menuButton: {
-        padding: 5,
+        padding: 10,
+        justifyContent: "center",
+        alignItems: "center"
     },
     menuIcon: {
         fontSize: 30,
@@ -129,6 +191,52 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingBottom: 80,
+    },
+    //EStilos de la barra
+    tabBarContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        height: 100,
+        position: 'absolute', // Aseguramos que se quede en la parte inferior
+        bottom: 0,
+        left: 0,
+        right: 0,
+        borderTopWidth: 1,
+        borderTopColor: '#ddd',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: -2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 10,
+    },
+    tabButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+    },
+    tabButtonActive: {
+        // Estilos para el botón activo si necesitas un efecto de "selección"
+    },
+    tabIcon: {
+        fontSize: 24,
+        color: '#888',
+    },
+    centerTabButton: {
+        backgroundColor: '#6200EE', // Color destacado para el botón central
+        width: 60,
+        height: 60,
+        borderRadius: 20
+, // Forma de círculo
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    centerTabIcon: {
+        fontSize: 30,
+        color: '#fff',
     },
 });
 
