@@ -38,7 +38,7 @@ const HomeScreen = ({navigation}) => {
     //Funcio para manejar el boton del perfil
     const handlePerfil = () => {
         setIsMenuVisible(false); //Oculta el menú
-
+        
     }
 
     //Componente que es la barra de navegación inferior
@@ -94,7 +94,6 @@ const HomeScreen = ({navigation}) => {
 
 
     //Este as la pantalla principal
-
     return(
         <SafeAreaView style={styles.safeArea}>
             {/* Encabezado */}
