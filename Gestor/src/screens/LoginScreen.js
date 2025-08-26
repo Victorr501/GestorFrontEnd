@@ -44,7 +44,8 @@ const LoginScreen = ({navigation}) => {
             //Indicar que el inicio de sesion esta completo
             setError('Inicio de sesion completa');
 
-            navigation.navigate('Home');
+            //Aqui es donde pasamos el usuario como result
+            navigation.navigate('Home', {user: result});
         } catch (errorCatch){
             console.log(errorCatch.message);
             Alert.alert('Error', errorCatch.message);

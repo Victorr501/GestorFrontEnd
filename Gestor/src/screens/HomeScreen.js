@@ -10,6 +10,8 @@ import{
     TouchableOpacity,
     Platform
 } from 'react-native';
+import { useRoute } from "@react-navigation/native";
+import PerfilScreen from "../screens/Home/PerfilScreen";
 
 
 //Simulacion de vantanas del proyecto
@@ -18,6 +20,8 @@ const SegundaScreenContent = () => <Text style={styles.contentTitle}>Contenido d
 const TerceraScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 3</Text>
 const CuertaScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 4</Text>
 const HomeScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de Inicio</Text>
+
+
 
 //Componente que es la barra de navegación inferior
 const BottomTabBar = ({onTabPress}) => {
@@ -68,11 +72,14 @@ const BottomTabBar = ({onTabPress}) => {
     )
 }
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}) => {
+    //Usamos userRoute para acceder a los parámetros
+    const navigationRoute = useRoute();
 
     //Estado para almacenar el nombre del usuario
     const [userName, setUserName] = useState('Usuario');
     const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const user = navigationRoute.params.user;
 
     //Estado de la ventana para ver caul es
     const [activeScreen, setActiveScreen] = useState('home');
@@ -80,8 +87,11 @@ const HomeScreen = ({navigation}) => {
     //Esto se ejecutara cuando el componente se monte.
     //Para cargar el usuario
     useEffect(() => {
-
-    }, []);
+        //Obtenemos el usuario de los parámetros de la ruta
+        if (user){
+            setUserName(user.name);
+        }
+    }, [navigationRoute.params]);
 
     //Funcion para mostrar/ocultar el menú
     const toggleMenu = () => {
@@ -97,7 +107,7 @@ const HomeScreen = ({navigation}) => {
     //Funcio para manejar el boton del perfil
     const handlePerfil = () => {
         setIsMenuVisible(false); //Oculta el menú
-
+        setActiveScreen('perfil');
     }
 
     //Metodo para renderizar el contenido
@@ -113,6 +123,8 @@ const HomeScreen = ({navigation}) => {
                 return <TerceraScreenContent/>
             case '4':
                 return <CuertaScreenContent/>
+            case 'perfil':
+                return <PerfilScreen user={user}/>
             default:
                 return <HomeScreenContent/>
         }
