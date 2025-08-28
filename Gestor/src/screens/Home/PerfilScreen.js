@@ -12,7 +12,7 @@ import{
 } from 'react-native';
 import { useRoute } from "@react-navigation/native";
 
-const PerfilScreen = () => {
+const PerfilScreen = ({user, handlePressModificarUsuario, handlePressModifcarContraseña, handlePressEliminar}) => {
     
     const route = useRoute();
     const user = route.params?.user || null;
@@ -20,17 +20,6 @@ const PerfilScreen = () => {
     const [userName, setUserName] = useState(user.name);
     const [userMail, setUserMail] = useState(user.email);
 
-    const handlePressEliminar = (action) => {
-        console.log(`Presionaste el botón: ${action}`);
-    };
-
-    const handlePressModificarUsuario = (action) => {
-        console.log(`Presionaste el botón: ${action}`);
-    };
-
-    const handlePressModifcarContraseña = (action) => {
-        console.log(`Presionaste el botón: ${action}`);
-    };
 
     return (
         <SafeAreaView style={styles.safeArea} >
@@ -41,20 +30,20 @@ const PerfilScreen = () => {
 
                 {/* Botón para eliminar la cuenta (sin funcionalidad) */}  
                 <TouchableOpacity
-                    onPress={() => handlePressModificarUsuario('Modificar Usuario')}
+                    onPress={() => handlePressModificarUsuario()}
                     style={styles.button}
                 >
                         <Text style={styles.buttonText}>Modificar Usuario</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.button}
-                    onPress={() => handlePressModifcarContraseña('Cambiar Contraseña')}
+                    onPress={() => handlePressModifcarContraseña()}
                 >
                     <Text style={styles.buttonText}>Cambiar Contraseña</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={[styles.button, styles.deleteButton]}
-                    onPress={() => handlePressEliminar('Eliminar Cuenta')}
+                    onPress={() => handlePressEliminar()}
                 >
                     <Text style={styles.buttonText}>Eliminar Cuenta</Text>
                 </TouchableOpacity>

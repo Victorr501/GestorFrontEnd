@@ -12,6 +12,7 @@ import{
 } from 'react-native';
 import { useRoute } from "@react-navigation/native";
 import PerfilScreen from "../screens/Home/PerfilScreen";
+import EditarUsuarioScreen from "../screens/Home/perfil/EditarUsusuarioScreen";
 
 
 //Simulacion de vantanas del proyecto
@@ -23,7 +24,12 @@ const HomeScreenContent = () => <Text style={styles.contentTitle}>Contenido de l
 
 
 
-//Componente que es la barra de navegación inferior
+/**
+ * Funcion que te devuelve el componete que son unos botones y tambien compruba que boton ha dado para mostrartelo por pantalla
+ * 
+ * @param {string} onTabPress - Es el nombre que modifica el atributo que hemos marcado 
+ * @returns {View} - Devuelve el componente de los botones
+ */
 const BottomTabBar = ({onTabPress}) => {
     const [activeTab, setActiveTab] = useState('plus');
 
@@ -83,6 +89,7 @@ const HomeScreen = ({navigation, route}) => {
 
     //Estado de la ventana para ver caul es
     const [activeScreen, setActiveScreen] = useState('home');
+    const [subActiveScreen, setSubActivScreen] = useState('0')
 
     //Esto se ejecutara cuando el componente se monte.
     //Para cargar el usuario
@@ -104,11 +111,18 @@ const HomeScreen = ({navigation, route}) => {
         navigation.navigate('Login');
     };
 
+    //Funciones del perfil
     //Funcio para manejar el boton del perfil
     const handlePerfil = () => {
         setIsMenuVisible(false); //Oculta el menú
         setActiveScreen('perfil');
     }
+    //Funcion para editar usuario
+    const handleEditar = () => {
+        setActiveScreen('perfil');
+        setSubActivScreen('1');
+    }
+    
 
     //Metodo para renderizar el contenido
     const renderScreenContent = () => {
@@ -124,7 +138,14 @@ const HomeScreen = ({navigation, route}) => {
             case '4':
                 return <CuertaScreenContent/>
             case 'perfil':
-                return <PerfilScreen user={user}/>
+                switch(subActiveScreen){
+                    case '0':
+                        return <PerfilScreen user={user} handlePressModificarUsuario={handleEditar} />
+                    case '1':
+                        return <EditarUsuarioScreen user={user}/>
+                    default:
+                        
+                }
             default:
                 return <HomeScreenContent/>
         }
