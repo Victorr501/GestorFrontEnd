@@ -77,3 +77,21 @@ export const login = async(userData) => {
     }
 }
 
+/**
+ * Funcion que llama al servidor para actualizar un usuario
+ * @param {object} userData - El usuario actualizado envio el usuario y este se actualiza
+ * @returns {Promise<Object>} - Si es existoso devuevle un suaurio
+ */
+export const actualizarUsuario = async(userData) => {
+
+}
+
+
+/**
+ * Funcion para actualizar la contraseña
+ * @param {object} userData - El usuario para actualizar solo con la contraseña 
+ */
+export const actualizarContrasena = async(userData) => {
+
+}
+

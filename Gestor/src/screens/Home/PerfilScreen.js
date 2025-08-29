@@ -12,10 +12,9 @@ import{
 } from 'react-native';
 import { useRoute } from "@react-navigation/native";
 
-const PerfilScreen = ({user, handlePressModificarUsuario, handlePressModifcarContraseña, handlePressEliminar}) => {
+/*Hay que poner los 2 metodos para ir al eliminar cuenta y al editar contraseña*/
+const PerfilScreen = ({user, handlePressModificarUsuario, handlePressModifcarContraseña}) => {
     
-    const route = useRoute();
-    const user = route.params?.user || null;
 
     const [userName, setUserName] = useState(user.name);
     const [userMail, setUserMail] = useState(user.email);

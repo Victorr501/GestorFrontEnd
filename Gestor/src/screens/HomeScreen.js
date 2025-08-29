@@ -13,6 +13,7 @@ import{
 import { useRoute } from "@react-navigation/native";
 import PerfilScreen from "../screens/Home/PerfilScreen";
 import EditarUsuarioScreen from "../screens/Home/perfil/EditarUsusuarioScreen";
+import EditarContrasenaScreen from "./Home/perfil/EditarConstrasenaScreen";
 
 
 //Simulacion de vantanas del proyecto
@@ -116,11 +117,18 @@ const HomeScreen = ({navigation, route}) => {
     const handlePerfil = () => {
         setIsMenuVisible(false); //Oculta el menú
         setActiveScreen('perfil');
+        setSubActivScreen('0');
     }
     //Funcion para editar usuario
     const handleEditar = () => {
         setActiveScreen('perfil');
         setSubActivScreen('1');
+    }
+    
+    //Funcion para editar usuario contraseña
+    const handleEditarCotrasena = () => {
+        setActiveScreen('perfil');
+        setSubActivScreen('2');
     }
     
 
@@ -140,11 +148,13 @@ const HomeScreen = ({navigation, route}) => {
             case 'perfil':
                 switch(subActiveScreen){
                     case '0':
-                        return <PerfilScreen user={user} handlePressModificarUsuario={handleEditar} />
+                        return <PerfilScreen user={user} handlePressModificarUsuario={handleEditar} handlePressModifcarContraseña={handleEditarCotrasena}/>
                     case '1':
-                        return <EditarUsuarioScreen user={user}/>
+                        return <EditarUsuarioScreen user={user} cerrarSesion={handleLogout}/>
+                    case '2':
+                        return <EditarContrasenaScreen user={user} cerrarSesion={handleLogout}/>
                     default:
-                        
+                        return <PerfilScreen user={user} handlePressModificarUsuario={handleEditar}/>
                 }
             default:
                 return <HomeScreenContent/>

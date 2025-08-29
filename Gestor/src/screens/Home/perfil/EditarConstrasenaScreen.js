@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"; 
+import React, {cache, useEffect, useState} from "react"; 
 import{
     View,
     Text,
@@ -10,67 +10,69 @@ import{
     TouchableOpacity,
     Platform
 } from 'react-native';
-import validateEmail from "../../../utils/ValidarEmail";
-import { actualizar } from "../../../services/userService";
+import { actualizarContrasena, login } from "../../../services/userService";
+
+const EditarContrasenaScreen = ({user, cerrarSesion}) => {
 
 
+    //Estados de los parametros
+    const [contrasenaAntigua, setContrasnaAntigua] = useState("");
+    const [contrasena, setContrasena] = useState("");
+    const [repiteContrasena, setRepiteContrasena] = useState("");
+    const email = user.email;
 
-/**
- * Pantalla que edita el nombre y correo
- * @param {object} props.user - Objeto de usuario actual con 'nombre' y 'correo'
- * 
- */
-const EditarUsuarioScreen = ({user , cerrarSesion}) => {
-    //Constantes de nombre y usuario
-    const [name, setName] = useState(user.name);
-    const [email, setEmail] = useState(user.email);
-
-    //Estado para manejar posibles errores de validazion
+    //Parametros para la contraseña
     const [error, setError] = useState('');
 
-
-    //Metodo que se ejecuta cuando se actualiza
+    //Metodo para actualizar la contraseña
     const handleSave = () => {
         setError('');
 
-        if(!name || !email) {
-            setError('Todos los campos son obligatorios.');
+        if(contrasena != repiteContrasena){
+            setError("Las contraseñas no coenciden");
             return;
         }
 
-        if(!validateEmail(email)){
-            setError('Por favor, indtrouce un correo electrónico válido');
+        const dataUser = {email, contrasenaAntigua};
+        try{
+            login(dataUser);
+        } catch (errorCatch) {
+            console.log(errorCatch.message);
+            Alert.alert('Error', errorCatch.message);
         }
-
-        userData = {name, email};
-        actualizar(userData);
-
-        cerrarSesion();
+        const actualizarUser = {contrasena};
+        actualizarContrasena(actualizarUser);
     }
-    
 
-    return (
+    return(
         <View style= {styles.container}>
-            <Text style= {styles.title}>Editar perfil</Text>
+            <Text style= {styles.title}>Editar contraseña</Text>
             <View style= {styles.formGroup}>
-                <Text style={styles.label}>Nombre</Text>
+                <Text style={styles.label}>Contraseña</Text>
                 <TextInput
                     style={styles.input}
-                    value={name}
-                    onChangeText={setName}
-                    placeholder="Tu nombre"
-                    autoCapitalize="words"
+                    value={contrasenaAntigua}
+                    onChangeText={setContrasnaAntigua}
+                    secureTextEntry={true}
+                />
+            </View>
+
+            <View style= {styles.formGroup}>
+                <Text style={styles.label}>Contraseña nueva</Text>
+                <TextInput
+                    style={styles.input}
+                    value={contrasena}
+                    onChangeText={setContrasena}
+                    secureTextEntry={true}
                 />
             </View>
             <View style={styles.formGroup}>
-                <Text style={styles.label}>Correo Electrónico</Text>
+                <Text style={styles.label}>Repite contraseña</Text>
                 <TextInput
                     style={styles.input}
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholder="ejemplo@correo.com"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
+                    value={repiteContrasena}
+                    onChangeText={setRepiteContrasena}
+                    secureTextEntry={true}
                 />
             </View>
 
@@ -83,6 +85,7 @@ const EditarUsuarioScreen = ({user , cerrarSesion}) => {
                 </TouchableOpacity>
             </View>                
         </View>
+        
     );
 };
 
@@ -155,4 +158,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EditarUsuarioScreen;
+export default EditarContrasenaScreen;
