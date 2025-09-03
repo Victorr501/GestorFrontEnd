@@ -43,7 +43,7 @@ const EditarUsuarioScreen = ({user , cerrarSesion}) => {
         }
 
         userData = {name, email};
-        actualizar(userData);
+        actualizar(userData, user.id);
 
         cerrarSesion();
     }

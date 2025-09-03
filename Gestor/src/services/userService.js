@@ -82,8 +82,29 @@ export const login = async(userData) => {
  * @param {object} userData - El usuario actualizado envio el usuario y este se actualiza
  * @returns {Promise<Object>} - Si es existoso devuevle un suaurio
  */
-export const actualizarUsuario = async(userData) => {
+export const actualizarUsuario = async(userData , userId) => {
+    const url = `${API_BASE_URL}/users/actualizar/${userId}`;
+    try {
+        const response = await fetch(url, {
+            method: "PATCH",
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify(userData)
+        })
 
+        if (!response.ok){
+            const erroData = await response.json();
+            throw new Error(erroData.message || 'Error al actualizar el usuario');
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error){
+        const respuesta = 'Error a actualizar el siguiente usuario';
+        console.error(respuesta, error);
+        throw error;
+    }
 }
 
 
