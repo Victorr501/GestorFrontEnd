@@ -10,8 +10,8 @@ import{
     TouchableOpacity,
     Platform
 } from 'react-native';
-import validateEmail from "../../../utils/ValidarEmail";
-import { actualizar } from "../../../services/userService";
+import {validateEmail} from "../../../utils/ValidarEmail";
+import { actualizarUsuario } from "../../../services/userService";
 
 
 
@@ -42,8 +42,8 @@ const EditarUsuarioScreen = ({user , cerrarSesion}) => {
             setError('Por favor, indtrouce un correo electrónico válido');
         }
 
-        userData = {name, email};
-        actualizar(userData, user.id);
+        const userData = {name, email};
+        actualizarUsuario(userData, user.id);
 
         cerrarSesion();
     }
