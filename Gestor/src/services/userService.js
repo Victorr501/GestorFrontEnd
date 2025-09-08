@@ -80,6 +80,7 @@ export const login = async(userData) => {
 /**
  * Funcion que llama al servidor para actualizar un usuario
  * @param {object} userData - El usuario actualizado envio el usuario y este se actualiza
+ * @param {string} userId - El id del usuario que queremos actualizar
  * @returns {Promise<Object>} - Si es existoso devuevle un suaurio
  */
 export const actualizarUsuario = async(userData , userId) => {
@@ -110,9 +111,33 @@ export const actualizarUsuario = async(userData , userId) => {
 
 /**
  * Funcion para actualizar la contraseña
- * @param {object} userData - El usuario para actualizar solo con la contraseña 
+ * @param {object} userData - El usuario para actualizar solo con la contraseña
+ * @param {string} userId - El id del usuario que queremos actualizar su contraseña
+ * @returns {Promise<Object>} - Si es existoso devuevle un suaurio
  */
-export const actualizarContrasena = async(userData) => {
+export const actualizarContrasena = async(userData, userId) => {
+    const url = `${API_BASE_URL}/users/actualizar/contrasena/${userId}`
+    try{
+        const response = await fetch(url,{
+            method: "PATCH",
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });        
+    
+        if(!response.ok){
+            const erroData = await response.json();
+            throw new Error(erroData.message || 'Error al actualizar contraseña');
+        }
 
+        const result = await response.json();
+        return result;
+
+    } catch (error){
+        const respuesta = 'Error al actualizar la contraseña';
+        console.error(respuesta, error);
+        throw error;
+    }
 }
 

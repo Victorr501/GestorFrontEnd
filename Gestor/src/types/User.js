@@ -4,5 +4,16 @@
  * @property {string} name El nombre completo del usuario.
  * @property {string} email La dirección de correo electrónico del usuario.
  * @property {string} password La contraseña del usuario.
- * @property {}
  */
+
+
+/**
+ * @typedef {object} userDataActualizar
+ * @property {string} name El nombre completo del usuario (En este caso seria uno nuveo o no)
+ * @property {string} email La dirección de correo electrónico del usuario
+ */
+
+/**
+ * @typedef {object} actualizarUser 
+ * @property {string} password La contraseña del usuario nueva.
+ *  */

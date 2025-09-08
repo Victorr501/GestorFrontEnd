@@ -25,7 +25,7 @@ const EditarContrasenaScreen = ({user, cerrarSesion}) => {
     const [error, setError] = useState('');
 
     //Metodo para actualizar la contraseña
-    const handleSave = () => {
+    const handleSave = async () => {
         setError('');
 
         if(contrasena != repiteContrasena){
@@ -33,15 +33,22 @@ const EditarContrasenaScreen = ({user, cerrarSesion}) => {
             return;
         }
 
-        const dataUser = {email, contrasenaAntigua};
+        const dataUser = {email, password: contrasenaAntigua};
         try{
-            login(dataUser);
+
+            const result = await login(dataUser);
+
+            const actualizarUser = {password: contrasena};
+            await actualizarContrasena(actualizarUser, user.id);
+
+            cerrarSesion();
+
         } catch (errorCatch) {
             console.log(errorCatch.message);
             Alert.alert('Error', errorCatch.message);
         }
-        const actualizarUser = {contrasena};
-        actualizarContrasena(actualizarUser);
+        
+        
     }
 
     return(

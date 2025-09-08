@@ -42,8 +42,8 @@ const EditarUsuarioScreen = ({user , cerrarSesion}) => {
             setError('Por favor, indtrouce un correo electrónico válido');
         }
 
-        const userData = {name, email};
-        actualizarUsuario(userData, user.id);
+        const userDataActualizar = {name, email};
+        actualizarUsuario(userDataActualizar, user.id);
 
         cerrarSesion();
     }
