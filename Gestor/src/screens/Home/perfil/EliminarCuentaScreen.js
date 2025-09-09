@@ -12,7 +12,7 @@ import{
 } from 'react-native';
 import { login, eliminarCuenta } from "../../../services/userService";
 
-const EliminarCuentaScreen = ({user, cerrarCesion}) => {
+const EliminarCuentaScreen = ({user, cerrarSesion}) => {
 
     const email = user.email;
     const [contrasena, setContrasena] = useState("");
@@ -34,10 +34,10 @@ const EliminarCuentaScreen = ({user, cerrarCesion}) => {
 
             await eliminarCuenta(user.id);
 
-            cerrarCesion();
+            cerrarSesion();
         } catch (errorCatch) {
-            console.log(errorCatch.messege);
-            Alert.alert("Error", errorCatch.messege);
+            console.log(errorCatch.message);
+            Alert.alert("Error", errorCatch.message);
         }
 
     };
@@ -56,6 +56,7 @@ const EliminarCuentaScreen = ({user, cerrarCesion}) => {
                     onChangeText={setContrasena}
                     placeholder="Tu contraseña"
                     textContentType="password"
+                    secureTextEntry={true}
                 />
                 <TouchableOpacity
                     onPress={handleDelete}

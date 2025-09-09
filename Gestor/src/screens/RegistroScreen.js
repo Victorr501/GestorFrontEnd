@@ -73,7 +73,7 @@ const RegistroScreen = ({navigation}) => {
 
 
             //Abrir el home de la aplicacion
-            navigation.navigate('Home');
+            navigation.navigate('Home', {user: result});
         } catch (error){
             console.log(error.message);
             Alert.alert('Error', error.message || 'Ocurrio un eror inesperado');
