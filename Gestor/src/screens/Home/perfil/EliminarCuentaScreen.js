@@ -10,14 +10,35 @@ import{
     TouchableOpacity,
     Platform
 } from 'react-native';
-import { login } from "../../../services/userService";
+import { login, eliminarCuenta } from "../../../services/userService";
 
 const EliminarCuentaScreen = ({user, cerrarCesion}) => {
 
     const email = user.email;
     const [contrasena, setContrasena] = useState("");
+    const [error, setError] = useState("");
 
     const handleDelete = async () => {
+
+        setError("");
+
+        if(contrasena === ""){
+            setError("Tienes que rellenar este campo");
+            return;
+        }
+
+        try{
+            
+            const dataUser = {email, password: contrasena};
+            const result = await login(dataUser);
+
+            await eliminarCuenta(user.id);
+
+            cerrarCesion();
+        } catch (errorCatch) {
+            console.log(errorCatch.messege);
+            Alert.alert("Error", errorCatch.messege);
+        }
 
     };
 
@@ -42,6 +63,7 @@ const EliminarCuentaScreen = ({user, cerrarCesion}) => {
                 >
                     <Text style={styles.deleteText}>Eliminar Cuenta</Text>
                 </TouchableOpacity>
+                {error ? <Text style={styles.errorText}>{error}</Text> : null}
                 <Text style={styles.note}>
                     Esta acción no se puede deshacer. Se borrarán tus datos de manera permanente.
                 </Text>
@@ -119,10 +141,10 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3,
     },
-        disabledBtn: {
+    disabledBtn: {
         opacity: 0.6,
     },
-        deleteText: {
+    deleteText: {
         color: '#fff',
         fontWeight: '700',
         fontSize: 16,
@@ -132,6 +154,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#777',
         textAlign: 'center',
+    },
+    errorText: {
+        color: '#d32f2f',
+        textAlign: 'center',
+        marginBottom: 15,
+        fontSize: 14,
     },
 });
 

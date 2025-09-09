@@ -128,7 +128,7 @@ export const actualizarContrasena = async(userData, userId) => {
     
         if(!response.ok){
             const erroData = await response.json();
-            throw new Error(erroData.message || 'Error al actualizar contraseña');
+            throw new error(erroData.message || 'Error al actualizar contraseña');
         }
 
         const result = await response.json();
@@ -136,6 +136,35 @@ export const actualizarContrasena = async(userData, userId) => {
 
     } catch (error){
         const respuesta = 'Error al actualizar la contraseña';
+        console.error(respuesta, error);
+        throw error;
+    }
+}
+
+/**
+ * Este metodo manda un mensaje al backend que lo que hace es eliminar una cuenta
+ * @param {string} userId - Esto es el id del usuario que quieres eliminar
+ * @returns {Promise<object>} - Devuelve esto si es exitoso
+ */
+export const eliminarCuenta = async(userId) => {
+    const url = `${API_BASE_URL}/users/eliminar/${userId}`;
+    try {
+        const response = await fetch(url,{
+            method: "DELETE",
+            headers:{
+                "Content-Type":"application/json",
+            }
+        });
+
+        if(!response.ok){
+            const erroData = await response.json();
+            throw new Error(erroData.message||"Error al eliminar el usuario de la base de datos");
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error){
+        const respuesta = "Error al eliminar el usuario";
         console.error(respuesta, error);
         throw error;
     }

@@ -21,7 +21,7 @@ const EditarContrasenaScreen = ({user, cerrarSesion}) => {
     const [repiteContrasena, setRepiteContrasena] = useState("");
     const email = user.email;
 
-    //Parametros para la contraseña
+    //Parametros para el error
     const [error, setError] = useState('');
 
     //Metodo para actualizar la contraseña
