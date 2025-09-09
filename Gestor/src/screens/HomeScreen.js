@@ -14,6 +14,7 @@ import { useRoute } from "@react-navigation/native";
 import PerfilScreen from "../screens/Home/PerfilScreen";
 import EditarUsuarioScreen from "../screens/Home/perfil/EditarUsusuarioScreen";
 import EditarContrasenaScreen from "./Home/perfil/EditarConstrasenaScreen";
+import EliminarCuentaScreen from "./Home/perfil/EliminarCuentaScreen";
 
 
 //Simulacion de vantanas del proyecto
@@ -130,6 +131,12 @@ const HomeScreen = ({navigation, route}) => {
         setActiveScreen('perfil');
         setSubActivScreen('2');
     }
+
+    //Funcion para eliminar perfil
+    const handlePressEliminar = () => {
+        setActiveScreen('perfil');
+        setSubActivScreen('3');
+    }
     
 
     //Metodo para renderizar el contenido
@@ -148,11 +155,13 @@ const HomeScreen = ({navigation, route}) => {
             case 'perfil':
                 switch(subActiveScreen){
                     case '0':
-                        return <PerfilScreen user={user} handlePressModificarUsuario={handleEditar} handlePressModifcarContraseña={handleEditarCotrasena}/>
+                        return <PerfilScreen user={user} handlePressModificarUsuario={handleEditar} handlePressModifcarContraseña={handleEditarCotrasena} handlePressEliminar={handlePressEliminar}/>
                     case '1':
                         return <EditarUsuarioScreen user={user} cerrarSesion={handleLogout}/>
                     case '2':
                         return <EditarContrasenaScreen user={user} cerrarSesion={handleLogout}/>
+                    case '3':
+                        return <EliminarCuentaScreen user={user} cerrarSesion={handleLogout}/>
                     default:
                         return <PerfilScreen user={user} handlePressModificarUsuario={handleEditar}/>
                 }
