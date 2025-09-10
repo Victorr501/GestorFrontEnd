@@ -6,7 +6,8 @@ import {
     Button,
     SafeAreaView,
     StyleSheet,
-    Alert
+    Alert,
+    TouchableOpacity
 } 
 from 'react-native';
 
@@ -22,6 +23,8 @@ const RegistroScreen = ({navigation}) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [name, setName] = useState('');
+    const [visible, setVisible] = useState(false);
+    const [repetirVisible, setRepetirVisible] = useState(false);
 
     //Esta variale activa el boton
     const [isLoading, setIsLoading] = useState(false);
@@ -102,20 +105,42 @@ const RegistroScreen = ({navigation}) => {
                     keyboardType="email-address"
                     autoCapitalize="none"
                 />
-                <TextInput
-                    style={styles.input}
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                    style={styles.inputPassword}
                     placeholder="Contraseña"
                     value={password}
                     onChangeText={setPassword}
-                    secureTextEntry
-                />
-                <TextInput
-                    style={styles.input}
+                    secureTextEntry = {!visible}
+                    />
+                    <TouchableOpacity
+                        style={styles.eyeBtn}
+                        onPress={() => setVisible(!visible)}
+                    >
+                        <Text style={styles.eyeText}>
+                            {visible ? "🙈" : "👁️"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                    style={styles.inputPassword}
                     placeholder="Repite la contraseña"
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
-                    secureTextEntry
-                />
+                    secureTextEntry = {!repetirVisible}
+                    />
+                    <TouchableOpacity
+                        style={styles.eyeBtn}
+                        onPress={() => setRepetirVisible(!repetirVisible)}
+                    >
+                        <Text style= {styles.eyeText}>                          
+                            {repetirVisible ? "🙈" : "👁️"}
+                        </Text>     
+                    </TouchableOpacity>
+                </View>
+                
                 {fallo ? <Text style={styles.errorText}>{fallo}</Text> : null}
                 <View style={styles.buttonContainer}>
                     <Button
@@ -175,6 +200,29 @@ const styles = StyleSheet.create({
     color: 'red',
     marginBottom: 10,
     textAlign: 'center'
+    },
+    passwordContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+        height: 50,
+        backgroundColor: "#fff",
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        marginBottom: 15,
+        paddingHorizontal: 10,
+    },
+    inputPassword: {
+        flex: 1,
+        height: "100%",
+        paddingHorizontal: 10,
+    },
+    eyeBtn: {
+        paddingHorizontal: 10,
+    },
+    eyeText: {
+        fontSize: 18,
     },
 })
 

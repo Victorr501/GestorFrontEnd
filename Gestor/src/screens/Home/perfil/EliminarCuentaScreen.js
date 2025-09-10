@@ -17,6 +17,7 @@ const EliminarCuentaScreen = ({user, cerrarSesion}) => {
     const email = user.email;
     const [contrasena, setContrasena] = useState("");
     const [error, setError] = useState("");
+    const [visible, setVisible] = useState(false);
 
     const handleDelete = async () => {
 
@@ -50,14 +51,25 @@ const EliminarCuentaScreen = ({user, cerrarSesion}) => {
             </Text>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Contraseña</Text>
-                <TextInput 
-                    style={styles.input}
-                    value={contrasena}
-                    onChangeText={setContrasena}
-                    placeholder="Tu contraseña"
-                    textContentType="password"
-                    secureTextEntry={true}
-                />
+                <View style={styles.passwordContainer}>
+                    <TextInput 
+                        style={styles.inputPassword}
+                        value={contrasena}
+                        onChangeText={setContrasena}
+                        placeholder="Tu contraseña"
+                        textContentType="password"
+                        secureTextEntry={!visible}
+                    />
+                    <TouchableOpacity 
+                        style={styles.eyeBtn}
+                        onPress={() => setVisible(!visible)}
+                    >
+                        <Text style={styles.eyeText}>
+                            {visible ? "🙈" : "👁️"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                
                 <TouchableOpacity
                     onPress={handleDelete}
                     style={styles.deleteBtn}
@@ -161,6 +173,31 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 15,
         fontSize: 14,
+    },
+    eyeBtn: {
+        paddingHorizontal: 10,
+    },
+    eyeText: {
+        fontSize: 18,
+    },
+    passwordContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+        height: 50,
+        backgroundColor: "#fff",
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        marginBottom: 15,
+    },
+    inputPassword: {
+        flex: 1,
+        height: "100%",
+        paddingHorizontal: 10,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#ccc'
     },
 });
 

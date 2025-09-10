@@ -21,6 +21,11 @@ const EditarContrasenaScreen = ({user, cerrarSesion}) => {
     const [repiteContrasena, setRepiteContrasena] = useState("");
     const email = user.email;
 
+    //Estados de ver la contraseña
+    const [visible, setVisible] = useState(false);
+    const [visibleNueva, setVisibleNueva] =useState(false);
+    const [visibleRepetir, setVisibleRepetir] = useState(false);
+
     //Parametros para el error
     const [error, setError] = useState('');
 
@@ -56,31 +61,64 @@ const EditarContrasenaScreen = ({user, cerrarSesion}) => {
             <Text style= {styles.title}>Editar contraseña</Text>
             <View style= {styles.formGroup}>
                 <Text style={styles.label}>Contraseña</Text>
-                <TextInput
-                    style={styles.input}
-                    value={contrasenaAntigua}
-                    onChangeText={setContrasnaAntigua}
-                    secureTextEntry={true}
-                />
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        style={styles.inputPassword}
+                        value={contrasenaAntigua}
+                        onChangeText={setContrasnaAntigua}
+                        secureTextEntry={!visible}
+                    />
+                    <TouchableOpacity 
+                        style={styles.eyeBtn}
+                        onPress={() => setVisible(!visible)}
+                    >
+                        <Text style={styles.eyeText}>
+                            {visible ? "🙈" : "👁️"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                
             </View>
 
             <View style= {styles.formGroup}>
                 <Text style={styles.label}>Contraseña nueva</Text>
-                <TextInput
-                    style={styles.input}
-                    value={contrasena}
-                    onChangeText={setContrasena}
-                    secureTextEntry={true}
-                />
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        style={styles.inputPassword}
+                        value={contrasena}
+                        onChangeText={setContrasena}
+                        secureTextEntry={!visibleNueva}
+                    />
+                    <TouchableOpacity 
+                        style={styles.eyeBtn}
+                        onPress={() => setVisibleNueva(!visibleNueva)}
+                    >
+                        <Text style={styles.eyeText}>
+                            {visibleNueva ? "🙈" : "👁️"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Repite contraseña</Text>
-                <TextInput
-                    style={styles.input}
-                    value={repiteContrasena}
-                    onChangeText={setRepiteContrasena}
-                    secureTextEntry={true}
-                />
+                <View style={styles.passwordContainer} >
+                    <TextInput
+                        style={styles.inputPassword}
+                        value={repiteContrasena}
+                        onChangeText={setRepiteContrasena}
+                        secureTextEntry={!visibleRepetir}
+                    />
+                    <TouchableOpacity 
+                        style={styles.eyeBtn}
+                        onPress={() => setVisibleRepetir(!visibleRepetir)}
+                    >
+                        <Text style={styles.eyeText}>
+                            {visibleRepetir ? "🙈" : "👁️"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                
             </View>
 
             {/*Linea de error por si algo sale mal */}
@@ -129,6 +167,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         backgroundColor: '#fff',
     },
+    inputPassword: {
+        flex: 1,
+        height: "100%",
+        paddingHorizontal: 10,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#ccc'
+    },
     errorText: {
         color: '#d32f2f',
         textAlign: 'center',
@@ -162,6 +208,23 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    eyeBtn: {
+        paddingHorizontal: 10,
+    },
+    eyeText: {
+        fontSize: 18,
+    },
+    passwordContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+        height: 50,
+        backgroundColor: "#fff",
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        marginBottom: 15,
     },
 });
 

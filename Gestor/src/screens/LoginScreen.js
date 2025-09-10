@@ -6,7 +6,8 @@ import{
     Button,
     Alert,
     StyleSheet,
-    SafeAreaView
+    SafeAreaView,
+    TouchableOpacity
 } from 'react-native';
 import {validateEmail} from '../utils/ValidarEmail';
 import { login } from "../services/userService";
@@ -16,6 +17,7 @@ const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [visible, setVisible] = useState(false);
 
     //Función que se ejecuta al presionar al botón de "Entrar"
     const handleLogin = async () => {
@@ -70,13 +72,24 @@ const LoginScreen = ({navigation}) => {
                     keyboardType="email-address"
                     autoCapitalize="none"
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Contraseña"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        style={styles.inputPassword}
+                        placeholder="Contraseña"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={!visible}
+                    />
+                    <TouchableOpacity 
+                        style={styles.eyeBtn}
+                        onPress={() => setVisible(!visible)}
+                    >
+                        <Text style={styles.eyeText}>
+                            {visible ? "🙈" : "👁️"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                
                 {error ? <Text style={styles.errorText}>{error}</Text> : null}
                 <View style={styles.buttonContainer}>
                     <Button
@@ -98,43 +111,65 @@ const LoginScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-    safeArea:{
-        flex:1,
-        backgroundColor:'#f5f5f5'
+    safeArea: {
+        flex: 1,
+        backgroundColor: "#f5f5f5",
     },
-    container:{
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
         padding: 20,
     },
-    title:{
+    title: {
         fontSize: 28,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         marginBottom: 40,
-        color: '#333'
-    
+        color: "#333",
     },
     input: {
-        width: '100%',
+        width: "100%",
         height: 50,
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
         borderRadius: 25,
         paddingHorizontal: 20,
         marginBottom: 15,
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: "#ddd",
+    },
+    passwordContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+        height: 50,
+        backgroundColor: "#fff",
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        marginBottom: 15,
+        paddingHorizontal: 10,
+    },
+    inputPassword: {
+        flex: 1,
+        height: "100%",
+        paddingHorizontal: 10,
+    },
+    eyeBtn: {
+        paddingHorizontal: 10,
+    },
+    eyeText: {
+        fontSize: 18,
     },
     buttonContainer: {
-        width: '100%',
+        width: "100%",
         marginTop: 10,
         borderRadius: 25,
-        overflow: 'hidden',
+        overflow: "hidden",
     },
     errorText: {
-    color: 'red',
-    marginBottom: 10,
-    textAlign: 'center'
+        color: "red",
+        marginBottom: 10,
+        textAlign: "center",
     },
 });
 
