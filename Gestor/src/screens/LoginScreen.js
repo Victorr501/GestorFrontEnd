@@ -59,6 +59,10 @@ const LoginScreen = ({navigation}) => {
         navigation.navigate('Registro')
     }
 
+    const handOlvidarContraseña = () =>{
+        navigation.navigate('PerdeContrasna')
+    }
+
     //Diseño de la aplicacion
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -103,6 +107,12 @@ const LoginScreen = ({navigation}) => {
                         onPress={handRegistar}
                     />
                 </View>
+                <Text 
+                    style={styles.olvidarContrseña} 
+                    onPress={handOlvidarContraseña}
+                >
+                    He olvidado mi contraseña
+                </Text>
             </View>
         </SafeAreaView>
     );
@@ -171,6 +181,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: "center",
     },
+    olvidarContrseña:{
+        fontSize: 14,            // texto pequeño
+        color: "#007AFF",        // azul tipo enlace
+        textAlign: "center",     // centrado
+        marginTop: 15,
+        cursor: "pointer",            
+    }
 });
 
 export default LoginScreen;
