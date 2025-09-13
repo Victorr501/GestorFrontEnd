@@ -37,8 +37,9 @@ const RecuperarContraseñaScreen = ({navigation}) => {
 
         try{
 
-            await enviarRecuperacion(email);
-            setError("Verifica el correo");
+            setError("");
+            const respuesta = await enviarRecuperacion(email);
+            setError(respuesta.detail);
             setEmail("");
 
         } catch(error){
