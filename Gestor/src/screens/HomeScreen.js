@@ -15,11 +15,11 @@ import PerfilScreen from "../screens/Home/PerfilScreen";
 import EditarUsuarioScreen from "../screens/Home/perfil/EditarUsusuarioScreen";
 import EditarContrasenaScreen from "./Home/perfil/EditarConstrasenaScreen";
 import EliminarCuentaScreen from "./Home/perfil/EliminarCuentaScreen";
+import MenuScreen from "./Home/MenuScreen";
 
 
 //Simulacion de vantanas del proyecto
 const PrimeraScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 1</Text>
-const SegundaScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 2</Text>
 const TerceraScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 3</Text>
 const CuertaScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de 4</Text>
 const HomeScreenContent = () => <Text style={styles.contentTitle}>Contenido de la Pantalla de Inicio</Text>
@@ -53,7 +53,7 @@ const BottomTabBar = ({onTabPress}) => {
             style={[styles.tabButton, activeTab === 'search' && styles.tabButtonActive]}
             onPress={() => handlePress('2')}
             >
-                <Text style={styles.tabIcon}>🔍</Text>
+                <Text style={styles.tabIcon}>📅</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
@@ -147,7 +147,7 @@ const HomeScreen = ({navigation, route}) => {
             case '1':
                 return <PrimeraScreenContent/>
             case '2':
-                return <SegundaScreenContent/>
+                return <MenuScreen/>
             case '3':
                 return <TerceraScreenContent/>
             case '4':
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'stretch',
         paddingBottom: 80,
     },
     //EStilos de la barra
