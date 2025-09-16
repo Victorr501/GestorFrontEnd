@@ -10,9 +10,13 @@ import{
     TouchableOpacity
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import {buscarCalendarioPorID} from "../../services/calendarioService"
 
 const MenuScreen = ({user}) => {
     
+    console.log(user.calendario_id)
+    const calendario = buscarCalendarioPorID(user.calendario_id)
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Calendario de ingresos y gastos</Text>

@@ -147,7 +147,7 @@ const HomeScreen = ({navigation, route}) => {
             case '1':
                 return <PrimeraScreenContent/>
             case '2':
-                return <MenuScreen/>
+                return <MenuScreen user={user}/>
             case '3':
                 return <TerceraScreenContent/>
             case '4':
