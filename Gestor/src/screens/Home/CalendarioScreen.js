@@ -12,19 +12,24 @@ import{
 import { Calendar } from 'react-native-calendars';
 import {buscarCalendarioPorID} from "../../services/calendarioService"
 
-const MenuScreen = ({user}) => {
+const CalendarioScreen = ({user, irAAñadirEvento, irAEliminarEvento}) => {
     
-    console.log(user.calendario_id)
-    const calendario = buscarCalendarioPorID(user.calendario_id)
+  const calendario = buscarCalendarioPorID(user.calendario_id)
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Calendario de ingresos y gastos</Text>
-            <Calendar style={styles.calendar}
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Calendario de ingresos y gastos</Text>
+      <Calendar style={styles.calendar}
 
-            />
-        </View>
-    )
+      />
+
+      <Button title="Añadir evento" onPress={irAAñadirEvento}/>
+
+      <Button title="Eliminar evento" onPress={irAEliminarEvento}/>
+    </View>
+  )
+
+
 };
 
 const styles = StyleSheet.create({
@@ -53,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuScreen;
+export default CalendarioScreen;

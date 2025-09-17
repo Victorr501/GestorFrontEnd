@@ -15,7 +15,8 @@ import PerfilScreen from "../screens/Home/PerfilScreen";
 import EditarUsuarioScreen from "../screens/Home/perfil/EditarUsusuarioScreen";
 import EditarContrasenaScreen from "./Home/perfil/EditarConstrasenaScreen";
 import EliminarCuentaScreen from "./Home/perfil/EliminarCuentaScreen";
-import MenuScreen from "./Home/MenuScreen";
+import CalendarioScreen from "./Home/CalendarioScreen";
+import CrearEventoSceen from "./Home/calendario/crearEventoScreen";
 
 
 //Simulacion de vantanas del proyecto
@@ -51,7 +52,7 @@ const BottomTabBar = ({onTabPress}) => {
 
             <TouchableOpacity 
             style={[styles.tabButton, activeTab === 'search' && styles.tabButtonActive]}
-            onPress={() => handlePress('2')}
+            onPress={() => handlePress('calendario')}
             >
                 <Text style={styles.tabIcon}>📅</Text>
             </TouchableOpacity>
@@ -91,7 +92,8 @@ const HomeScreen = ({navigation, route}) => {
 
     //Estado de la ventana para ver caul es
     const [activeScreen, setActiveScreen] = useState('home');
-    const [subActiveScreen, setSubActivScreen] = useState('0')
+    const [subActiveScreen, setSubActivScreen] = useState('0');
+    cosnt [subActiveScreenCalendario, setSubActivScreenCalendario] = useState('0');
 
     //Esto se ejecutara cuando el componente se monte.
     //Para cargar el usuario
@@ -112,6 +114,13 @@ const HomeScreen = ({navigation, route}) => {
         console.log("Cerrando sesión...");
         navigation.navigate('Login');
     };
+
+    //Finciones del menu
+    //Ir a crear evento
+    const irAAñadirEvento = () =>{
+        setActiveScreen('calendario');
+        setSubActivScreenCalendario('1');
+    }
 
     //Funciones del perfil
     //Funcio para manejar el boton del perfil
@@ -146,8 +155,13 @@ const HomeScreen = ({navigation, route}) => {
                 return <HomeScreenContent/>
             case '1':
                 return <PrimeraScreenContent/>
-            case '2':
-                return <MenuScreen user={user}/>
+            case 'calendario':
+                switch(subActiveScreenCalendario){
+                    case '0':
+                        return <CalendarioScreen user={user}/>
+                    case '1':
+                        return <CrearEventoSceen user={user}/>
+                }
             case '3':
                 return <TerceraScreenContent/>
             case '4':
